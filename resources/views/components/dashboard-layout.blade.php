@@ -38,7 +38,7 @@
 
                 <nav class="mt-10">
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="#">
+                        href="/dashboard">
                         <span class="mx-3">Dashboard</span>
                     </a>
 
@@ -48,7 +48,7 @@
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="#">
+                        href="{{ route('categories') }}">
                         <span class="mx-3">Category</span>
                     </a>
 
@@ -57,7 +57,7 @@
                         <span class="mx-3">Order</span>
                     </a>
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="#">
+                        href="{{ route('staffs') }}">
                         <span class="mx-3">Staff</span>
                     </a>
                 </nav>
@@ -91,7 +91,8 @@
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Profile</a>
                                 <a href="#"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-600 hover:text-white">Products</a>
-                                <form action="{{ route('logout') }}" method="POST" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-600 hover:text-white">
+                                <form action="{{ route('logout') }}" method="POST"
+                                    class="block px-4 py-2 text-sm text-red-600 hover:bg-red-600 hover:text-white">
                                     @csrf
                                     <input type="submit" value="Logout" class="">
                                 </form>
@@ -100,7 +101,15 @@
                     </div>
                 </header>
 
-                {{ $slot }}
+
+                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+                    <div class="container px-6 py-8 mx-auto">
+                        {{ $slot }}
+                        <div class="mt-8">
+
+                        </div>
+                    </div>
+                </main>
 
             </div>
         </div>
