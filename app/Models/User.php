@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Role;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,11 +24,25 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'avatar',
+        'phone_no',
+        'address'
     ];
 
     public function role(){
         return $this->BelongsTo(Role::class);
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($user) {
+            if ($user->isDirty('name')) {
+                $user->slug = Str::slug($user->name);
+            }
+        });
     }
 
     /**

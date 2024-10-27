@@ -31,12 +31,18 @@ Route::get('/dashboard', function () {
 });
 
 // category
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('category.create');
-Route::post('/categories/store', [CategoryController::class, 'store'])->name('category.store');
-Route::get('/categories/{category:slug}/edit', [CategoryController::class, 'edit'])->name('category.edit');
-Route::post('/categories/{category:slug}/update', [CategoryController::class, 'update'])->name('category.update');
-Route::delete('/categories/{category:slug}/destory', [CategoryController::class, 'destory'])->name('category.destory');
+Route::get('/category/list', [CategoryController::class, 'index'])->name('categories');
+Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+Route::get('/category/{category:slug}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+Route::post('/category/{category:slug}/update', [CategoryController::class, 'update'])->name('category.update');
+Route::delete('/category/{category:slug}/destory', [CategoryController::class, 'destory'])->name('category.destory');
 
 // staff
-Route::get('/staffs', [UserController::class, 'index'])->name('staffs');
+Route::get('/staff/list', [UserController::class, 'index'])->name('staffs');
+Route::get('/staff/create', [UserController::class, 'create'])->name('staff.create');
+Route::post('/staff/store', [UserController::class, 'store'])->name('staff.store');
+Route::get('/staff/{user:slug}', [UserController::class, 'show'])->name('staff.show');
+Route::get('/staff/{user:slug}/edit', [UserController::class, 'edit'])->name('staff.edit');
+Route::patch('/staff/{user:slug}/update', [UserController::class, 'update'])->name('staff.update');
+Route::delete('/staff/{user:slug}/destory', [UserController::class, 'destory'])->name('staff.delete');
