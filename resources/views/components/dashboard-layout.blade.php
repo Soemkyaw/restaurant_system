@@ -49,7 +49,17 @@
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
                         href="{{ route('categories') }}">
-                        <span class="mx-3">Category</span>
+                        <span class="mx-3">Categories</span>
+                    </a>
+
+                    <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
+                        href="{{ route('tables') }}">
+                        <span class="mx-3">Tables</span>
+                    </a>
+
+                    <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
+                        href="{{ route('roles') }}">
+                        <span class="mx-3">Roles</span>
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
@@ -58,7 +68,7 @@
                     </a>
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
                         href="{{ route('staffs') }}">
-                        <span class="mx-3">Staff</span>
+                        <span class="mx-3">Staffs</span>
                     </a>
                 </nav>
             </div>
