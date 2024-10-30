@@ -37,7 +37,7 @@
                     </td>
                     <td class="px-6 py-4">
                         <a href="{{ route('category.edit',$category->slug) }}" class="font-semibold text-blue-600 dark:text-blue-500 hover:underline me-3">Edit</a>
-                        <form action="{{ route('category.destory',$category->slug) }}" method="POST" class=" inline">
+                        <form action="{{ route('category.destroy',$category->slug) }}" method="POST" class=" inline">
                             @csrf
                             @method('DELETE')
                             <button class="font-semibold text-red-600 dark:text-red-500 hover:underline">Remove</button>

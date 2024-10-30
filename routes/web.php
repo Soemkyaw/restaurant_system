@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
@@ -38,7 +39,17 @@ Route::get('/categories/category/create', [CategoryController::class, 'create'])
 Route::post('/categories/category/store', [CategoryController::class, 'store'])->name('category.store');
 Route::get('/categories/{category:slug}/edit', [CategoryController::class, 'edit'])->name('category.edit');
 Route::post('/categories/{category:slug}/update', [CategoryController::class, 'update'])->name('category.update');
-Route::delete('/categories/{category:slug}/destory', [CategoryController::class, 'destory'])->name('category.destory');
+Route::delete('/categories/{category:slug}/destroy', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+// menu
+Route::get('/menus',[MenuController::class,'index'])->name('menus');
+Route::get('/menus/menu/create',[MenuController::class,'create'])->name('menu.create');
+Route::post('/menus/menu/store',[MenuController::class,'store'])->name('menu.store');
+Route::get('/menus/{menu:slug}/show',[MenuController::class,'show'])->name('menu.show');
+Route::get('/menus/{menu:slug}/edit', [MenuController::class, 'edit'])->name('menu.edit');
+Route::patch('/menus/{menu:slug}/update', [MenuController::class, 'update'])->name('menu.update');
+Route::delete('/menus/{menu:slug}/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
+
 
 // staff
 Route::get('/staff/list', [UserController::class, 'index'])->name('staffs');
@@ -47,7 +58,7 @@ Route::post('/staff/store', [UserController::class, 'store'])->name('staff.store
 Route::get('/staff/{user:slug}', [UserController::class, 'show'])->name('staff.show');
 Route::get('/staff/{user:slug}/edit', [UserController::class, 'edit'])->name('staff.edit');
 Route::patch('/staff/{user:slug}/update', [UserController::class, 'update'])->name('staff.update');
-Route::delete('/staff/{user:slug}/destory', [UserController::class, 'destory'])->name('staff.delete');
+Route::delete('/staff/{user:slug}/destroy', [UserController::class, 'destroy'])->name('staff.delete');
 
 // table
 Route::get('/tables', [TableController::class, 'index'])->name('tables');

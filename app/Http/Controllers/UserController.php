@@ -66,7 +66,7 @@ class UserController extends Controller
         return redirect()->route('staffs');
     }
 
-    public function destory(User $user)
+    public function destroy(User $user)
     {
         $user->delete();
 

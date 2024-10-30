@@ -10,6 +10,13 @@ class Menu extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name','price','category_id','is_available','image','preparation_time','spicy_level','discpunt'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public static function boot()
     {
         parent::boot();

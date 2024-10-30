@@ -43,7 +43,7 @@
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="#">
+                        href="{{ route('menus') }}">
                         <span class="mx-3">Menu</span>
                     </a>
 
