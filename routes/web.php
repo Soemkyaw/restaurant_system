@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TableController;
@@ -23,6 +25,16 @@ Route::get('/', function () {
     return view('home');
 });
 
+// recipes show
+Route::get('/recipes', [HomeController::class, 'recipes']);
+
+
+// ajax
+Route::get('/cart', [CartController::class,'index'])->name('cart.index')->middleware('auth');
+Route::post('/cart/add', [CartController::class,'add'])->name('cart.add')->middleware('auth');
+Route::put('/cart/update', [CartController::class,'update'])->name('cart.update')->middleware('auth');
+Route::delete('/cart/{cart:id}/destroy', [CartController::class,'destroy'])->name('cart.destroy');
+
 // auth
 Route::get('login',[AuthController::class,'login'])->name('login');
 Route::post('login/check',[AuthController::class,'checkLogin'])->name('login.check');
@@ -42,9 +54,9 @@ Route::post('/categories/{category:slug}/update', [CategoryController::class, 'u
 Route::delete('/categories/{category:slug}/destroy', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 // menu
-Route::get('/menus',[MenuController::class,'index'])->name('menus');
-Route::get('/menus/menu/create',[MenuController::class,'create'])->name('menu.create');
-Route::post('/menus/menu/store',[MenuController::class,'store'])->name('menu.store');
+Route::get('/menu/list',[MenuController::class,'index'])->name('menus');
+Route::get('/menus/item/create',[MenuController::class,'create'])->name('menu.create');
+Route::post('/menus/item/store',[MenuController::class,'store'])->name('menu.store');
 Route::get('/menus/{menu:slug}/show',[MenuController::class,'show'])->name('menu.show');
 Route::get('/menus/{menu:slug}/edit', [MenuController::class, 'edit'])->name('menu.edit');
 Route::patch('/menus/{menu:slug}/update', [MenuController::class, 'update'])->name('menu.update');
