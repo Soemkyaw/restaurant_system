@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Menu;
+use App\Models\Table;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -13,13 +14,14 @@ class CartController extends Controller
         $subTotal = $this->subTotal();
         return view('cart.index', [
             "carts" => Cart::where('user_id', auth()->id())->get(),
-            "subTotal" => $subTotal
+            "subTotal" => $subTotal,
+            'tables' => Table::all(),
         ]);
     }
     public function add(Request $request)
     {
         log(auth()->id());
-        $cart = Cart::where('menu_item_id', $request->menu_item_id);
+        $cart = Cart::where('menu_item_id', $request->menuItemId)->where('user_id',auth()->id());
 
         $cart->exists();
         if ($cart->exists()) {
@@ -30,8 +32,9 @@ class CartController extends Controller
         } else {
             Cart::firstOrCreate([
                 'user_id' => auth()->id(),
-                'menu_item_id' => $request->menu_item_id,
+                'menu_item_id' => $request->menuItemId,
                 'quantity' => $request->quantity,
+                'price' =>  $request->menuItemPrice,
             ]);
         }
         ;
@@ -71,6 +74,6 @@ class CartController extends Controller
             $subTotal += $cart->quantity * $cart->menuItem->price;
         }
 
-        return $subTotal;
+        return (int)$subTotal;
     }
 }

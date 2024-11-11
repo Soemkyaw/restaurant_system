@@ -7,7 +7,7 @@
             <div class="w-full max-w-sm min-w-[200px] relative">
                 <div class="relative">
                     <a href="{{ route('menu.create') }}" class=" bg-blue-500 text-white py-2 rounded px-3 hover:bg-blue-600">Add New
-                        Menu</a>
+                        Menu Item</a>
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
@@ -26,14 +27,17 @@ Route::get('/', function () {
 });
 
 // recipes show
-Route::get('/recipes', [HomeController::class, 'recipes']);
+Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
 
 
-// ajax
+// cart
 Route::get('/cart', [CartController::class,'index'])->name('cart.index')->middleware('auth');
 Route::post('/cart/add', [CartController::class,'add'])->name('cart.add')->middleware('auth');
-Route::put('/cart/update', [CartController::class,'update'])->name('cart.update')->middleware('auth');
+Route::patch('/cart/update', [CartController::class,'update'])->name('cart.update')->middleware('auth');
 Route::delete('/cart/{cart:id}/destroy', [CartController::class,'destroy'])->name('cart.destroy');
+
+// order
+Route::post('/order/store',[OrderController::class,'store'])->name('order.store');
 
 // auth
 Route::get('login',[AuthController::class,'login'])->name('login');

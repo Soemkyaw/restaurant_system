@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Restaurant SYS</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite('resources/css/app.css')
     <style>
         /* Chrome, Safari, Edge, Opera */
@@ -24,7 +25,7 @@
 </head>
 
 <body>
-    <nav class="bg-white/30 fixed w-full shadow-lg">
+    <nav class="bg-white/70 fixed w-full shadow-lg z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16">
 
@@ -74,7 +75,7 @@
 
     {{ $slot }}
 
-
+    <x-sweet-alerts></x-sweet-alerts>
     <script>
         // Toggle mobile menu
         document.getElementById('nav-toggle').addEventListener('click', () => {

@@ -28,25 +28,25 @@
                 <h4 class="font-bold mt-12 pb-2 border-b border-green-400">Special Recipes</h4>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    @foreach ($recipes as $recpie)
+                    @foreach ($specialMenuItems as $menuItem)
                         <div
                             class=" mt-8 bg-white rounded-md overflow-hidden shadow-md relative hover:shadow-xl recpieCard">
                             <!-- card go here  -->
                             <div class="">
-                                <img src="{{ asset('storage/' . $recpie->image) }}" alt="Stake"
+                                <img src="{{ asset('storage/' . $menuItem->image) }}" alt="Stake"
                                     class="w-full h-32 sm:h-48 object-cover">
                             </div>
                             <div class="p-4">
-                                <span class="font-bold">{{ Str::ucfirst($recpie->name) }}</span>
-                                <span class="block text-green-700 text-sm=">{{ number_format($recpie->price) }}
+                                <span class="font-bold">{{ Str::ucfirst($menuItem->name) }}</span>
+                                <span class="block text-green-700 text-sm=">{{ number_format($menuItem->price) }}
                                     Ks</span>
-                                <input class="recpie-name" value="{{ $recpie->name }}" hidden>
-                                <input class="recpie-price" value="{{ $recpie->price }}" hidden>
-                                <input class="recpie-id" value="{{ $recpie->id }}" hidden>
+                                <input class="recpie-name" value="{{ $menuItem->name }}" hidden>
+                                <input class="recpie-price" value="{{ $menuItem->price }}" hidden>
+                                <input class="recpie-id" value="{{ $menuItem->id }}" hidden>
                             </div>
                             <div
                                 class=" bg-gray-100 text-gray-400 text-xs font-bold uppercase rounded-full ml-2 mt-2 p-2 absolute top-0">
-                                <span>{{ $recpie->preparation_time }} Mins</span>
+                                <span>{{ $menuItem->preparation_time }} Mins</span>
                             </div>
                             <div class="grid grid-cols-3 gap-2 items-center text-center p-3 qtyHandler">
                                 <button
@@ -74,10 +74,52 @@
                 <h4 class="font-bold mt-12 pb-2 border-b border-green-400">Most Recipes</h4>
                 <div class=" mt-8">
                     <!-- card go here  -->
+                    <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
+                        @foreach ($menuItems as $menuItem)
+                            <div
+                                class=" mt-8 bg-white rounded-md overflow-hidden shadow-md relative hover:shadow-xl recpieCard">
+                                <!-- card go here  -->
+                                <div class="">
+                                    <img src="{{ asset('storage/' . $menuItem->image) }}" alt="Stake"
+                                        class="w-full h-32 sm:h-48 object-cover">
+                                </div>
+                                <div class="p-4">
+                                    <span class="font-bold">{{ Str::ucfirst($menuItem->name) }}</span>
+                                    <span class="block text-green-700 text-sm=">{{ number_format($menuItem->price) }}
+                                        Ks</span>
+                                    <input class="recpie-name" value="{{ $menuItem->name }}" hidden>
+                                    <input class="recpie-price" value="{{ $menuItem->price }}" hidden>
+                                    <input class="recpie-id" value="{{ $menuItem->id }}" hidden>
+                                </div>
+                                <div
+                                    class=" bg-gray-100 text-gray-400 text-xs font-bold uppercase rounded-full ml-2 mt-2 p-2 absolute top-0">
+                                    <span>{{ $menuItem->preparation_time }} Mins</span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-2 items-center text-center px-3 py-1 qtyHandler">
+                                    <button
+                                        class="plus bg-gray-400 text-white font-semibold px-2  rounded hover:bg-gray-700 focus:outline-none">
+                                        +
+                                    </button>
+                                    <input type="number" value="1"
+                                        class="menu-item-qty w-full text-center bg-gray-100 text-gray-700 border border-gray-300 rounded px-1  outline-none focus:ring-2 focus:ring-gray-400">
+                                    <button
+                                        class="minus bg-gray-400 text-white font-semibold px-2  rounded hover:bg-gray-700 focus:outline-none">
+                                        -
+                                    </button>
+                                </div>
 
+
+                                <div class=" text-center p-3">
+                                    <button id="addToCart"
+                                        class="addToCart btn border px-2 py-1 bg-gray-300 rounded hover:bg-gray-200 w-full">Add
+                                        to Cart</button>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
 
-                <div class=" flex justify-center">
+                <div class=" flex justify-center mt-3">
                     <div
                         class="rounded-full border-gray-400 border-2 py-2 px-3 uppercase cursor-pointer text-xs tracking-winder hover:bg-gray-400 hover:text-white">
                         Load More</div>
@@ -106,10 +148,12 @@
         $('.addToCart').click(function() {
             let parentDiv = $(this).closest('.recpieCard');
             // let name = parentDiv.find('.recpie-name').val();
-            // let price = parseInt(parentDiv.find('.recpie-price').val());
-            let id = parseInt(parentDiv.find('.recpie-id').val());
+            let menuItemPrice = parseInt(parentDiv.find('.recpie-price').val());
+            let menuItemId = parseInt(parentDiv.find('.recpie-id').val());
             let qtyInput = parentDiv.find('.menu-item-qty');
             let quantity = parentDiv.find('.menu-item-qty').val();
+
+            console.log(menuItemPrice);
 
 
             $.ajax({
@@ -117,7 +161,8 @@
                 type: "POST",
                 data: {
                     quantity: quantity,
-                    menu_item_id: id,
+                    menuItemId: menuItemId,
+                    menuItemPrice: menuItemPrice,
                     _token: "{{ csrf_token() }}",
                 },
                 success: function(response) {
@@ -125,6 +170,21 @@
                         qtyInput.val(1)
 
                         $('.cartCount').text(response.count);
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: "Add to cart successfully"
+                        });
                     }
                 }
             });
