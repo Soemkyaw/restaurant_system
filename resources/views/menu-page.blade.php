@@ -24,13 +24,35 @@
                     </div>
                 </div>
             </div>
-            <div class=" mt-6">
-                @foreach ($categories as $category)
-                    <a href="" class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
-                        {{ $category->name }}
-                    </a>
-                @endforeach
-
+            <div class=" mt-6 md:flex justify-between items-center">
+                <div>
+                    @foreach ($categories as $category)
+                        <a href=""
+                            class=" inline-block px-2 py-1.5 my-1.5 text-sm font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                            {{ $category->name }}
+                        </a>
+                    @endforeach
+                </div>
+                <div class=" md:w-96 my-5">
+                    <form class="max-w-xl mx-auto">
+                        <label for="default-search"
+                            class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input type="search" id="default-search"
+                                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Search Mockups, Logos..." required />
+                            <button type="submit"
+                                class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="">
                 <h4 class="font-bold mt-6 pb-2 border-b border-green-400">Special Recipes</h4>
@@ -40,10 +62,10 @@
                         <div
                             class=" mt-8 bg-white rounded-md overflow-hidden shadow-md relative hover:shadow-xl recpieCard">
                             <!-- card go here  -->
-                            <div class="">
+                            <a href="{{ route('menu.item.show', $menuItem->slug) }}" class="">
                                 <img src="{{ asset('storage/' . $menuItem->image) }}" alt="Stake"
                                     class="w-full h-32 sm:h-48 object-cover">
-                            </div>
+                            </a>
                             <div class="p-4">
                                 <span class="font-bold">{{ Str::ucfirst($menuItem->name) }}</span>
                                 <span class="block text-green-700 text-sm=">{{ number_format($menuItem->price) }}
@@ -136,68 +158,69 @@
         </main>
     </div>
     <script>
-        $('.plus, .minus').click(function() {
-            let qtyInput = $(this).closest('.qtyHandler').find('.menu-item-qty');
-            let currentQty = parseInt(qtyInput.val(), 10);
-            let increment = $(this).hasClass('plus') ? 1 : -1;
+        $(document).ready(function() {
+            $('.plus, .minus').click(function() {
+                let qtyInput = $(this).closest('.qtyHandler').find('.menu-item-qty');
+                let currentQty = parseInt(qtyInput.val(), 10);
+                let increment = $(this).hasClass('plus') ? 1 : -1;
 
-            let newQty = currentQty + increment;
+                let newQty = currentQty + increment;
 
-            // Disable buttons if new quantity is 0
-            if (newQty === 0) {
-                $(this).closest('.qtyHandler').find('.minus').prop('disabled', true);
-            } else {
-                $(this).closest('.qtyHandler').find('.plus, .minus').prop('disabled', false);
-            }
-
-            qtyInput.val(newQty);
-        });
-
-        $('.addToCart').click(function() {
-            let parentDiv = $(this).closest('.recpieCard');
-            // let name = parentDiv.find('.recpie-name').val();
-            let menuItemPrice = parseInt(parentDiv.find('.recpie-price').val());
-            let menuItemId = parseInt(parentDiv.find('.recpie-id').val());
-            let qtyInput = parentDiv.find('.menu-item-qty');
-            let quantity = parentDiv.find('.menu-item-qty').val();
-
-            console.log(menuItemPrice);
-
-
-            $.ajax({
-                url: "/cart/add",
-                type: "POST",
-                data: {
-                    quantity: quantity,
-                    menuItemId: menuItemId,
-                    menuItemPrice: menuItemPrice,
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function(response) {
-                    if (response.status === 200) {
-                        qtyInput.val(1)
-
-                        $('.cartCount').text(response.count);
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: "top-end",
-                            showConfirmButton: false,
-                            timer: 3000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                                toast.onmouseenter = Swal.stopTimer;
-                                toast.onmouseleave = Swal.resumeTimer;
-                            }
-                        });
-                        Toast.fire({
-                            icon: "success",
-                            title: "Add to cart successfully"
-                        });
-                    }
+                // Disable buttons if new quantity is 0
+                if (newQty === 0) {
+                    $(this).closest('.qtyHandler').find('.minus').prop('disabled', true);
+                } else {
+                    $(this).closest('.qtyHandler').find('.plus, .minus').prop('disabled', false);
                 }
+
+                qtyInput.val(newQty);
             });
 
-        })
-        // })
+            $('.addToCart').click(function() {
+                let parentDiv = $(this).closest('.recpieCard');
+                // let name = parentDiv.find('.recpie-name').val();
+                let menuItemPrice = parseInt(parentDiv.find('.recpie-price').val());
+                let menuItemId = parseInt(parentDiv.find('.recpie-id').val());
+                let qtyInput = parentDiv.find('.menu-item-qty');
+                let quantity = parentDiv.find('.menu-item-qty').val();
+
+                console.log(menuItemPrice);
+
+
+                $.ajax({
+                    url: "/cart/add",
+                    type: "POST",
+                    data: {
+                        quantity: quantity,
+                        menuItemId: menuItemId,
+                        menuItemPrice: menuItemPrice,
+                        _token: "{{ csrf_token() }}",
+                    },
+                    success: function(response) {
+                        if (response.status === 200) {
+                            qtyInput.val(1)
+
+                            $('.cartCount').text(response.count);
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Add to cart successfully"
+                            });
+                        }
+                    }
+                });
+
+            })
+        });
     </script>
 </x-layout>

@@ -23,4 +23,16 @@ class HomeController extends Controller
             'categories' => $categories
         ]);
     }
+
+    public function showMenuItem(Menu $menu)
+    {
+        $randomMenuItems = Menu::inRandomOrder()->limit(3)->get();
+        $cartCount = count(Cart::where('user_id', auth()->id())->get());
+
+        return view('menu-item',[
+            'menuItem' => $menu,
+            'randomMenuItems' => $randomMenuItems,
+            'cartCount' => $cartCount,
+        ]);
+    }
 }

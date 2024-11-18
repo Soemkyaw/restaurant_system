@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 // recipes show
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
+Route::get('/menu/{menu:slug}', [HomeController::class, 'showMenuItem'])->name('menu.item.show');
 
 
 // cart
@@ -63,13 +64,13 @@ Route::post('/categories/{category:slug}/update', [CategoryController::class, 'u
 Route::delete('/categories/{category:slug}/destroy', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 // menu
-Route::get('/menu/list',[MenuController::class,'index'])->name('menus');
-Route::get('/menus/item/create',[MenuController::class,'create'])->name('menu.create');
-Route::post('/menus/item/store',[MenuController::class,'store'])->name('menu.store');
-Route::get('/menus/{menu:slug}/show',[MenuController::class,'show'])->name('menu.show');
-Route::get('/menus/{menu:slug}/edit', [MenuController::class, 'edit'])->name('menu.edit');
-Route::patch('/menus/{menu:slug}/update', [MenuController::class, 'update'])->name('menu.update');
-Route::delete('/menus/{menu:slug}/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
+Route::get('/admin/menu/list',[MenuController::class,'index'])->name('menus');
+Route::get('/admin/menus/item/create',[MenuController::class,'create'])->name('menu.create');
+Route::post('/admin/menus/item/store',[MenuController::class,'store'])->name('menu.store');
+Route::get('/admin/menus/{menu:slug}/show',[MenuController::class,'show'])->name('menu.show');
+Route::get('/admin/menus/{menu:slug}/edit', [MenuController::class, 'edit'])->name('menu.edit');
+Route::patch('/admin/menus/{menu:slug}/update', [MenuController::class, 'update'])->name('menu.update');
+Route::delete('/admin/menus/{menu:slug}/destroy', [MenuController::class, 'destroy'])->name('menu.destroy');
 
 
 // staff
