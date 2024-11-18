@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Restaurant SYS</title>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     @vite('resources/css/app.css')
 </head>
 
@@ -48,26 +51,26 @@
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="{{ route('categories') }}">
+                        href="{{ route('categories.index') }}">
                         <span class="mx-3">Categories</span>
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="{{ route('tables') }}">
+                        href="{{ route('tables.index') }}">
                         <span class="mx-3">Tables</span>
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="{{ route('roles') }}">
+                        href="{{ route('roles.index') }}">
                         <span class="mx-3">Roles</span>
                     </a>
 
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="#">
+                        href="{{ route('orders.index') }}">
                         <span class="mx-3">Order</span>
                     </a>
                     <a class="flex items-center px-6 py-2 mt-4 text-gray-400 hover:bg-gray-700 bg-opacity-25 hover:text-gray-100"
-                        href="{{ route('staffs') }}">
+                        href="{{ route('staffs.index') }}">
                         <span class="mx-3">Staffs</span>
                     </a>
                 </nav>
@@ -125,6 +128,7 @@
         </div>
     </div>
 
+    <x-sweet-alerts></x-sweet-alerts>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
-
 </html>

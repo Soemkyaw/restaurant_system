@@ -54,22 +54,13 @@
                 <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
                     <form action="{{ route('order.store') }}" method="POST">
                         @csrf
-                        <div class="mb-2 flex justify-between">
-                            <p class="text-gray-700">Subtotal</p>
-                            <p class="text-gray-700 subTotal">{{ number_format($subTotal) }} Ks</p>
-                        </div>
-                        <div class="flex justify-between">
-                            <p class="text-gray-700">Tax</p>
-                            <p class="text-gray-700">300 Ks</p>
-                        </div>
                         <hr class="my-4" />
                         <div class="flex justify-between">
                             <p class="text-lg font-bold">Total</p>
                             <div class="">
-                                <p class="mb-1 text-lg font-bold totalAmount">{{ number_format($subTotal + 300) }} Ks
+                                <p class="mb-1 text-lg font-bold subTotal">{{ number_format($subTotal,2) }} Ks
                                 </p>
-                                <input type="number" hidden name="total" value="{{ $subTotal + 300 }}">
-                                <p class="text-sm text-gray-700">including TAX</p>
+                                <input type="number" hidden name="subTotal" class="total" value="{{ $subTotal }}">
                             </div>
                         </div>
                         <select name="table_id"
@@ -117,7 +108,7 @@
                         qtyInput.val(newQty);
                         itemSubTotal.text((newQty * itemPrice).toLocaleString() + " Ks");
                         $('.subTotal').text((response.subTotal).toLocaleString() + " Ks");
-                        $('.totalAmount').text((response.subTotal + 300).toLocaleString() + " Ks");
+                        $('.total').val(response.subTotal)
                     }
                 }
             });
@@ -140,7 +131,7 @@
                     if (response.status === 200) {
                         $(`.${$cart}`).remove()
                         $('.subTotal').text((response.subTotal).toLocaleString() + " Ks")
-                        $('.totalAmount').text((response.subTotal).toLocaleString() + " Ks")
+                        $('.total').val(response.subTotal)
                     }
                 }
             })

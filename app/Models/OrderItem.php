@@ -10,4 +10,9 @@ class OrderItem extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function menuItem()
+    {
+        return $this->belongsTo(Menu::class, 'menu_item_id');
+    }
 }

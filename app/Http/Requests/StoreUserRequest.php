@@ -23,7 +23,7 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => ['required','min:3'],
-            'email' => ['required','email','min:3'],
+            'email' => ['required','email','min:3','unique:users,email'],
             'password' => ['required','confirmed','min:5'],
             'avatar' => ['nullable','file','mimes:jpg,jpeg,png'],
             'phone_no' => ['nullable','numeric','min:6'],

@@ -37,7 +37,12 @@ Route::patch('/cart/update', [CartController::class,'update'])->name('cart.updat
 Route::delete('/cart/{cart:id}/destroy', [CartController::class,'destroy'])->name('cart.destroy');
 
 // order
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::post('/order/store',[OrderController::class,'store'])->name('order.store');
+Route::get('/orders/{order:id}', [OrderController::class, 'show'])->name('order.show');
+Route::patch('/orders/{order:id}', [OrderController::class, 'update'])->name('order.update');
+Route::get('/bill/print/{order:id}', [OrderController::class, 'printBill'])->name('bill.print');
+
 
 // auth
 Route::get('login',[AuthController::class,'login'])->name('login');
@@ -50,7 +55,7 @@ Route::get('/dashboard', function () {
 });
 
 // category
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/category/create', [CategoryController::class, 'create'])->name('category.create');
 Route::post('/categories/category/store', [CategoryController::class, 'store'])->name('category.store');
 Route::get('/categories/{category:slug}/edit', [CategoryController::class, 'edit'])->name('category.edit');
@@ -68,7 +73,7 @@ Route::delete('/menus/{menu:slug}/destroy', [MenuController::class, 'destroy'])-
 
 
 // staff
-Route::get('/staff/list', [UserController::class, 'index'])->name('staffs');
+Route::get('/staff/list', [UserController::class, 'index'])->name('staffs.index');
 Route::get('/staff/create', [UserController::class, 'create'])->name('staff.create');
 Route::post('/staff/store', [UserController::class, 'store'])->name('staff.store');
 Route::get('/staff/{user:slug}', [UserController::class, 'show'])->name('staff.show');
@@ -77,7 +82,7 @@ Route::patch('/staff/{user:slug}/update', [UserController::class, 'update'])->na
 Route::delete('/staff/{user:slug}/destroy', [UserController::class, 'destroy'])->name('staff.delete');
 
 // table
-Route::get('/tables', [TableController::class, 'index'])->name('tables');
+Route::get('/tables', [TableController::class, 'index'])->name('tables.index');
 Route::get('/tables/table/create', [TableController::class, 'create'])->name('table.create');
 Route::post('/tables/table/store', [TableController::class, 'store'])->name('table.store');
 Route::get('/tables/{table:slug}/edit', [TableController::class, 'edit'])->name('table.edit');
@@ -85,7 +90,7 @@ Route::patch('/tables/{table:slug}/update', [TableController::class, 'update'])-
 Route::delete('/tables/{table:slug}/destroy', [TableController::class, 'destroy'])->name('table.destroy');
 
 // role
-Route::get('/roles', [RoleController::class, 'index'])->name('roles');
+Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
 Route::get('/roles/role/create', [RoleController::class, 'create'])->name('role.create');
 Route::post('/roles/role/store', [RoleController::class, 'store'])->name('role.store');
 Route::get('/roles/{role:slug}/edit', [RoleController::class, 'edit'])->name('role.edit');

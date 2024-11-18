@@ -24,8 +24,16 @@
                     </div>
                 </div>
             </div>
+            <div class=" mt-6">
+                @foreach ($categories as $category)
+                    <a href="" class="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                        {{ $category->name }}
+                    </a>
+                @endforeach
+
+            </div>
             <div class="">
-                <h4 class="font-bold mt-12 pb-2 border-b border-green-400">Special Recipes</h4>
+                <h4 class="font-bold mt-6 pb-2 border-b border-green-400">Special Recipes</h4>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($specialMenuItems as $menuItem)

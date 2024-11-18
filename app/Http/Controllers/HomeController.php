@@ -14,11 +14,13 @@ class HomeController extends Controller
         $specialCategoryId = Category::where('name', 'specials')->pluck('id')->first();
         $specialMenuItems = Menu::where('category_id', $specialCategoryId)->get();
         $menuItems = Menu::where('category_id','!=',$specialCategoryId)->get();
+        $categories = Category::all();
 
         return view('menu-page',[
             'specialMenuItems' => $specialMenuItems,
             'menuItems' => $menuItems,
-            'cartCount' => count(Cart::where('user_id',auth()->id())->get())
+            'cartCount' => count(Cart::where('user_id',auth()->id())->get()),
+            'categories' => $categories
         ]);
     }
 }

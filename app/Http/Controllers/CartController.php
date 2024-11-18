@@ -11,19 +11,19 @@ class CartController extends Controller
 {
     public function index()
     {
-        $subTotal = $this->subTotal();
+        $carts = Cart::where('user_id', auth()->id())->with('menuItem')->get();
+        $subTotal = $this->subTotal($carts);
         return view('cart.index', [
-            "carts" => Cart::where('user_id', auth()->id())->get(),
+            "carts" => $carts,
             "subTotal" => $subTotal,
             'tables' => Table::all(),
         ]);
     }
     public function add(Request $request)
     {
-        log(auth()->id());
-        $cart = Cart::where('menu_item_id', $request->menuItemId)->where('user_id',auth()->id());
+        $cart = Cart::where('menu_item_id', $request->menuItemId)->where('user_id',auth()->id())->with('menuItem');
 
-        $cart->exists();
+        // $cart->exists();
         if ($cart->exists()) {
             $cart = $cart->first();
             $cart->update([
@@ -39,8 +39,7 @@ class CartController extends Controller
         }
         ;
 
-
-        $cartCount = count(Cart::where('user_id', auth()->id())->get());
+        $cartCount = count(Cart::where('user_id', auth()->id())->with('menuItem')->get());
 
         return response()->json(['status' => 200, 'count' => $cartCount]);
     }
@@ -56,7 +55,7 @@ class CartController extends Controller
 
     public function update(Request $request)
     {
-        $cart = Cart::where('id', $request->id)->first();
+        $cart = Cart::where('id', $request->id)->with('menuItem')->first();
         $cart->update([
             'quantity' => $request->quantity
         ]);
@@ -66,9 +65,9 @@ class CartController extends Controller
         return response()->json(['status' => 200, 'subTotal' => $subTotal]);
     }
 
-    public function subTotal()
+    public function subTotal($carts = null)
     {
-        $carts = Cart::where('user_id', auth()->id())->get();
+        $carts = $carts ?? Cart::where('user_id', auth()->id())->with('menuItem')->get();
         $subTotal = 0;
         foreach ($carts as $cart) {
             $subTotal += $cart->quantity * $cart->menuItem->price;
