@@ -58,9 +58,10 @@
                         <div class="flex justify-between">
                             <p class="text-lg font-bold">Total</p>
                             <div class="">
-                                <p class="mb-1 text-lg font-bold subTotal">{{ number_format($subTotal,2) }} Ks
+                                <p class="mb-1 text-lg font-bold subTotal">{{ number_format($subTotal, 2) }} Ks
                                 </p>
-                                <input type="number" hidden name="subTotal" class="total" value="{{ $subTotal }}">
+                                <input type="number" hidden name="subTotal" class="total"
+                                    value="{{ $subTotal }}">
                             </div>
                         </div>
                         <select name="table_id"
@@ -73,68 +74,71 @@
                             class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Order
                             Now</button>
                     </form>
-                    <a href="{{ route('menu') }}" class="text-sm text-blue-600 hover:underline block mt-3">back to menu</a>
+                    <a href="{{ route('menu') }}" class="text-sm text-blue-600 hover:underline block mt-3">back to
+                        menu</a>
                 </div>
             </div>
         </div>
     </section>
     <script>
-        // quantity handler
-        $('.plus, .minus').click(function() {
-            let qtyInput = $(this).closest('.qtyHandler').find('.recpie-qty');
-            let itemSubTotal = $(this).closest('.qtyHandler').find('.itemSubTotal');
-            let itemPrice = $(this).closest('.qtyHandler').find('.recpie-price').val();
-            let cartId = $(this).closest('.qtyHandler').find('.cartId').val();
-            let currentQty = parseInt(qtyInput.val(), 10);
-            let increment = $(this).hasClass('plus') ? 1 : -1;
-            let newQty = currentQty + increment;
+        $(document).ready(function() {
+            // quantity handler
+            $('.plus, .minus').click(function() {
+                let qtyInput = $(this).closest('.qtyHandler').find('.recpie-qty');
+                let itemSubTotal = $(this).closest('.qtyHandler').find('.itemSubTotal');
+                let itemPrice = $(this).closest('.qtyHandler').find('.recpie-price').val();
+                let cartId = $(this).closest('.qtyHandler').find('.cartId').val();
+                let currentQty = parseInt(qtyInput.val(), 10);
+                let increment = $(this).hasClass('plus') ? 1 : -1;
+                let newQty = currentQty + increment;
 
-            if (newQty === 1) {
-                $(this).closest('.qtyHandler').find('.minus').prop('disabled', true);
-            } else {
-                $(this).closest('.qtyHandler').find('.plus, .minus').prop('disabled', false);
-            }
-
-            $.ajax({
-                url: "/cart/update",
-                type: "PATCH",
-                data: {
-                    quantity: newQty,
-                    id: cartId,
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function(response) {
-                    if (response.status === 200) {
-                        qtyInput.val(newQty);
-                        itemSubTotal.text((newQty * itemPrice).toLocaleString() + " Ks");
-                        $('.subTotal').text((response.subTotal).toLocaleString() + " Ks");
-                        $('.total').val(response.subTotal)
-                    }
+                if (newQty === 1) {
+                    $(this).closest('.qtyHandler').find('.minus').prop('disabled', true);
+                } else {
+                    $(this).closest('.qtyHandler').find('.plus, .minus').prop('disabled', false);
                 }
+
+                $.ajax({
+                    url: "/cart/update",
+                    type: "PATCH",
+                    data: {
+                        quantity: newQty,
+                        id: cartId,
+                        _token: "{{ csrf_token() }}",
+                    },
+                    success: function(response) {
+                        if (response.status === 200) {
+                            qtyInput.val(newQty);
+                            itemSubTotal.text((newQty * itemPrice).toLocaleString() + " Ks");
+                            $('.subTotal').text((response.subTotal).toLocaleString() + " Ks");
+                            $('.total').val(response.subTotal)
+                        }
+                    }
+                });
+
             });
 
-        });
+            // remove cart handler
+            $('.remove').click(function() {
 
-        // remoce cart handler
-        $('.remove').click(function() {
+                $cartId = $(this).closest('.qtyHandler').find('.cartId').val();
+                $cart = "cart-" + $cartId
 
-            $cartId = $(this).closest('.qtyHandler').find('.cartId').val();
-            $cart = "cart-" + $cartId
-
-            $.ajax({
-                url: `/cart/${$cartId}/destroy`,
-                type: "DELETE",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function(response) {
-                    if (response.status === 200) {
-                        $(`.${$cart}`).remove()
-                        $('.subTotal').text((response.subTotal).toLocaleString() + " Ks")
-                        $('.total').val(response.subTotal)
+                $.ajax({
+                    url: `/cart/destroy/${$cartId}`,
+                    type: "DELETE",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                    },
+                    success: function(response) {
+                        if (response.status === 200) {
+                            $(`.${$cart}`).remove()
+                            $('.subTotal').text((response.subTotal).toLocaleString() + " Ks")
+                            $('.total').val(response.subTotal)
+                        }
                     }
-                }
+                })
             })
-        })
+        });
     </script>
 </x-layout>

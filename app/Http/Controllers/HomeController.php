@@ -9,16 +9,25 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    public function home()
+    {
+        return view('home');
+    }
+
+    public function dashboard()
+    {
+        return view('admin.dashboard');
+    }
     public function menu()
     {
         $specialCategoryId = Category::where('name', 'specials')->pluck('id')->first();
         $specialMenuItems = Menu::where('category_id', $specialCategoryId)->get();
-        $menuItems = Menu::where('category_id','!=',$specialCategoryId)->get();
+        $menuItems = Menu::where('category_id','!=',$specialCategoryId)->filter(request(['search','category']));
         $categories = Category::all();
 
         return view('menu-page',[
             'specialMenuItems' => $specialMenuItems,
-            'menuItems' => $menuItems,
+            'menuItems' => $menuItems->get(),
             'cartCount' => count(Cart::where('user_id',auth()->id())->get()),
             'categories' => $categories
         ]);

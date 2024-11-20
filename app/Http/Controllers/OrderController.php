@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -72,5 +73,22 @@ class OrderController extends Controller
     public function printBill(Order $order)
     {
         return view('order.bill',compact('order'));
+    }
+
+    public function orderItems()
+    {
+        // $orders = Order::where('status', '!=', 'paid')->get();
+
+        // $orderItems = [];
+        // foreach ($orders as $order) {
+        //     foreach ($order->orderItems as $item) {
+        //         $orderItems[] = $item;
+        //     }
+        // }
+        $orderItems = OrderItem::with('menuItem','order.table')->paginate(5);
+
+        return view('orders-items', [
+            'orderItems' => $orderItems
+        ]);
     }
 }

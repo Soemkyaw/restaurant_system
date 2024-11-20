@@ -31,7 +31,7 @@
 
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="text-2xl font-bold text-indigo-600">MyLogo</a>
+                    <a href="{{ route('menu') }}" class="text-2xl font-bold text-indigo-600">MyLogo</a>
                 </div>
 
                 <!-- Toggle button for mobile -->
@@ -47,27 +47,27 @@
 
                 <!-- Nav links -->
                 <div class="hidden sm:flex space-x-4 items-center">
+                    <a href="/orders/items"
+                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Orders</a>
+                    <a href="{{ route('menu') }}"
+                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Menu</a>
                     <a href="#"
-                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Profile</a>
                     <a href="#"
-                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">About</a>
-                    <a href="#"
-                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Services</a>
-                    <a href="#"
-                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                        class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium">Logout</a>
                 </div>
             </div>
 
             <!-- Mobile menu -->
             <div id="nav-menu" class="sm:hidden mt-2 space-y-1 hidden">
                 <a href="#"
-                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Orders</a>
                 <a href="#"
-                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">About</a>
+                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Menu</a>
                 <a href="#"
-                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Services</a>
+                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Profile</a>
                 <a href="#"
-                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                    class="block text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium">Logout</a>
             </div>
         </div>
     </nav>
