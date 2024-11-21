@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
@@ -27,12 +28,15 @@ Route::patch('/cart/update', [CartController::class,'update'])->name('cart.updat
 Route::delete('/cart/destroy/{cart:id}', [CartController::class,'destroy'])->name('cart.destroy');
 
 // order
-Route::get('/orders/items', [OrderController::class, 'orderItems'])->name('orders.items');
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::post('/orders/store',[OrderController::class,'store'])->name('order.store');
 Route::get('/orders/{order:id}', [OrderController::class, 'show'])->name('order.show');
 Route::patch('/orders/{order:id}', [OrderController::class, 'update'])->name('order.update');
 Route::get('/bill/print/{order:id}', [OrderController::class, 'printBill'])->name('bill.print');
+
+// order item
+Route::get('/order-items', [OrderItemController::class, 'index'])->name('order.items');
+Route::patch('/order-items/update/{orderItem:id}', [OrderItemController::class, 'update']);
 
 // auth
 Route::get('login',[AuthController::class,'login'])->name('login');

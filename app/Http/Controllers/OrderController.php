@@ -77,15 +77,7 @@ class OrderController extends Controller
 
     public function orderItems()
     {
-        // $orders = Order::where('status', '!=', 'paid')->get();
-
-        // $orderItems = [];
-        // foreach ($orders as $order) {
-        //     foreach ($order->orderItems as $item) {
-        //         $orderItems[] = $item;
-        //     }
-        // }
-        $orderItems = OrderItem::with('menuItem','order.table')->paginate(5);
+        $orderItems = OrderItem::whereNotIn('status', ['pending', 'served'])->with('menuItem','order.table')->paginate(10);
 
         return view('orders-items', [
             'orderItems' => $orderItems

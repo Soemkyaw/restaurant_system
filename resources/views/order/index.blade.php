@@ -265,6 +265,7 @@
             $parentTr = $(this).closest('.order');
             $orderId = $parentTr.find('.orderId').val();
 
+
             $.ajax({
                 url: `/orders/${$orderId}`,
                 type: "PATCH",
@@ -293,7 +294,6 @@
                             title: `${response.message}`
                         });
                     }
-
                 }
             })
         })

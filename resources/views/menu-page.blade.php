@@ -1,6 +1,6 @@
 <x-layout>
     <div class="pt-16">
-        <main class="px-16 py-6 bg-gray-100 md:col-span-5 ">
+        <main class="px-16 py-10 bg-gray-100 md:col-span-5 ">
             <div class=" flex items-center justify-between">
                 <header>
                     <h2 class="text-gray-700 text-6xl font-semibold">Recipes</h2>
