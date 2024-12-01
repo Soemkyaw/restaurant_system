@@ -27,7 +27,7 @@ class CategoryController extends Controller
         ]);
         Category::create($attributes);
 
-        return redirect()->route('categories');
+        return redirect()->route('categories.index');
     }
 
     public function edit(Category $category)
@@ -44,13 +44,13 @@ class CategoryController extends Controller
 
         $category->update($attributes);
 
-        return redirect()->route('categories');
+        return redirect()->route('categories.index');
     }
 
-    public function destory(Category $category)
+    public function destroy(Category $category)
     {
         $category->delete();
 
-        return redirect()->route('categories');
+        return redirect()->route('categories.index');
     }
 }

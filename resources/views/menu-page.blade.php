@@ -55,7 +55,8 @@
                 </div>
             </div>
             <div class="">
-                <h4 class="font-bold mt-6 pb-2 border-b border-green-400">Special Recipes</h4>
+                @if (isset($specialMenuItems))
+                    <h4 class="font-bold mt-6 pb-2 border-b border-green-400">Special Recipes</h4>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @foreach ($specialMenuItems as $menuItem)
@@ -100,8 +101,9 @@
                         </div>
                     @endforeach
                 </div>
+                @endif
 
-                <h4 class="font-bold mt-12 pb-2 border-b border-green-400">Most Recipes</h4>
+                <h4 class="font-bold mt-12 pb-2 border-b border-green-400">{{ request('category')??"Most Recipes"}}</h4>
                 <div class=" mt-8">
                     <!-- card go here  -->
                     <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -149,11 +151,7 @@
                     </div>
                 </div>
 
-                <div class=" flex justify-center mt-3">
-                    <div
-                        class="rounded-full border-gray-400 border-2 py-2 px-3 uppercase cursor-pointer text-xs tracking-winder hover:bg-gray-400 hover:text-white">
-                        Load More</div>
-                </div>
+                <div class="mt-16 border-b border-green-400"></div>
             </div>
         </main>
     </div>
